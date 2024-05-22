@@ -18,33 +18,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title {
-	Lab 1
+	Networking
 }
 
 \author {
 	Philip Wenkel \\
 	{\tt phiwen-7@student.ltu.se}
 }
-% Institutionen för teknikvetenskap och matematik \\ \\
-% \includegraphics[width=0.2\textwidth]{ltu_swe.jpg}}
-% MG: Bilder på första sidan är bäst att lägga i "author"-
-% kommandot såvitt jag kan se.
 
-% Ange författare, e-post samt datum för publiceringen.
-% Titelsidan kan också innehålla en figur för att locka läsaren att läsa rapporten.
-% Figurens innehåll måste naturligtvis vara kopplat till arbetet som beskrivs i rapporten.
-%
-% På en titel kan man ställa höga krav. Titeln skall vara klar och beskrivande och fungera
-% som en miniatyr-sammanfattning av arbetet. Läsaren skall förstå vad rapporten handlar om
-% genom att läsa titeln. Trots det ska titeln vara kort, 4-12 ord, och får inte innehålla
-% några formler, förkortningar eller speciella symboler.
-%
-% En bra titel är en titel som med minsta möjliga antal ord korrekt beskriver innehållet i
-% rapporten. Det kan ibland vara praktiskt att ha en titel och en undertitel.
-%
-% För laborationsrapporter; E-post samt laborationshandledare skall infogas.
-%
-% Byt LTU logga vid engelsk rapport.
 
 \date{\today}
 
@@ -52,288 +33,120 @@
 
 \maketitle
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% -                  PREAMBLE ENDS HERE                   - %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% -                      Abstract                          - %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% \newpage
-
-% \section*{Sammanfattning}
-
-% Sammanfattningen är fristående från rapporten i övrigt. Man skall kunna läsa sammanfattningen utan att ha läst rapporten, och tvärtom. I sammanfattningen skall det finnas en kort beskrivning av problem, metod och de viktigaste resultaten samt vad de medför. Den skall vara komplett, objektiv och lätt att förstå. Sammanfattningen skall sammanfatta arbetet och någon extra information, som inte finns i rapporten, får inte skrivas in i sammanfattningen. Sammanfattningen skall vara kort och bör maximalt innehålla 150-200 ord.
-
-% % Det ska inte finnas bilder eller figurer i sammanfattningen. Den bör inte innehålla formler
-% % men beskrivning av de viktigaste resultaten. Om formler finns måste alla variabler definieras.
-
-% \section*{Abstract}
-
-% Sammanfattning på engelska.
-
-% Svenska för labrapporter.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% -                    Table of contents                   - %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 \tableofcontents
 
-% Varje ny huvudrubrik ska börja på ny sida.
-%
-% Du bör ha Innehållsförteckning som rubrik till sidan. Däremot ska inte
-% innehållsförteckningen vara en rubrik i själva innehållsförteckningen.
-%
-% Kom ihåg att uppdatera innehållsförteckningen när du ändrat i rapporten.
-% Det görs enklast genom att högerklicka i innehållsförteckningen och välja ”uppdatera fält”.
-%
-% Titelsidan skall inte sidnumreras. De sidor som får ett sidprefix på respektive sida är,
-% förord, sammanfattning, innehållsförteckning och beteckningar. Från inledning används sidnummer.
-% Sidnummer skrivs ut på respektive sida exempelvis centrerat i sidfoten. OBS sidnumrering är
-% redan gjord i denna mall.
-
-% \newpage
-% \section*{Beteckningar}
-% \begin{table}[h]
-% \begin{tabular}{l l}
-% $\rho$ & Densitet (kg/m$^3$) \\
-% A & Area (m$^2$)
-% \end{tabular}
-% \end{table}
-
-% Teckenförklaring, nomenklatur eller på engelska nomenclature eller abbrevations.
-% Rapporter innehåller i allmänhet ett stort antal symboler och beteckningar som läsaren kan ha
-% svårt att hålla reda på. Huvudregeln är att en storhet definieras och förklaras första gången
-% den dyker upp i texten. Härutöver skall samtliga i rapportens förekommande storheter,
-% betecknade med latinska och/eller grekiska versaler och gemener, listas i en teckenförklaring.
-
 \newpage
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% -                    Introduction                        - %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Task 0}
-The first command is to remotely connect securely from the client to the server.
+
+\section{Clearing a router}
 
 \begin{minted}{bash}
-	ssh anon@172.16.0.123
+	router# erase startup-config
+	router# erase running-config
+	router# write erase
+	router# reload
 \end{minted}
+
+\section{Preparing a standalone switch}
+The first commands is to clear and setup the switches in the topology.
+
+
+\subsection{Delete the VLAN database file}
+\begin{minted}{bash}
+	switch# delete flash:vlan.dat
+\end{minted}
+
+\subsection{Erase the startup config from NVRAM}
+\begin{minted}{bash}
+	switch# erase startup-config
+\end{minted}
+
+\subsection{Reload the device}
+\begin{minted}{bash}
+	switch# reload
+\end{minted}
+
+\section{Clearing a connected switch}
+\subsection{Delete the VLAN database file}
+\begin{minted}{bash}
+	switch# delete vlan.dat
+\end{minted}
+
+\subsection{Erase the startup config from NVRAM}
+\begin{minted}{bash}
+	switch# erase startup-config
+\end{minted}
+
+\subsection{Shut down interfaces}
+\begin{minted}{bash}
+	switch# interface range FastEthernet 0/1 - 24
+	switch# shutdown
+\end{minted}
+
+\subsection{Remove the VLANs}
+\begin{minted}{bash}
+	switch# no vlan 2-999
+\end{minted}
+
+\subsection{Basic config}
+\begin{minted}{bash}
 	
-The following commands update packages and installs them. There were 35 packages upgraded on my ubuntu client.
-
-\begin{minted}{bash}
-	sudo apt update
-	sudo apt upgrade
 \end{minted}
 
-%\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{ubuntu}
-
-\section {Task 1}
-Here is a screen print of my test. 
-I think it was a good course which covered a lot of basic things.
-\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{quiz}
-
-\section{Task 2}
-The first command prints "/home/anon"
+\subsection{Configure transparent VTP mode}
 \begin{minted}{bash}
-	pwd
+	switch# vtp mode transparent
+	switch# vtp domain CISCO
 \end{minted}
 
-The second command have the same parent directory "home/anon"
+\section{Setting up trunks for DLS}
 \begin{minted}{bash}
-	cd
+	switch# int range f0/1-9
+	switch# switchport trunk encapsulation dot1q
+	switch# switchport mode trunk
 \end{minted}
 
-The third command makes the resulting directory /etc/apt
+\section{Setting up trunks for ALS}
 \begin{minted}{bash}
-	cd /etc/apt
+	switch# int range f0/1-9
+	switch# switchport mode trunk
 \end{minted}
 
-The forth command makes the resulting directory /etc/dhcp
+\section{Change primary and secondary roots}
 \begin{minted}{bash}
-	cd ../dhcp
+	switch1# spanning-tree vlan 1 root primary
+	switch2# spanning-tree vlan 1 root secondary
 \end{minted}
 
-The fifth command makes the resulting directory /home/anon/Downloads
+\section{Setting portfast on a switch}
 \begin{minted}{bash}
-	cd ~/Downloads
+	switch# int fa0/1
+	switch# spanning-tree portfast
 \end{minted}
 
-The sixth command makes the resulting directory /home/anon
+\section{Setting port cost}
 \begin{minted}{bash}
-	cd ..
+	switch# int fa0/1
+	switch# spanning-tree cost 10
 \end{minted}
 
-The seventh command doesnt work.
-The '~' is home directory, '..' is parent directory and '.' is current directory.
-
-The following command shows disc space. The used size of disk /dev/sda2 is 6.1 mb while 506 mb is available.
-It is mounted on /boot/efi
-Note that I choose sda2 because sda1 didn't show up.
-The '-h' option print sizes in powers of 1024.
-
+\section{Assign a root switch for each VLAN}
 \begin{minted}{bash}
-	dh -h
+	switch1# spanning-tree vlan 10 priority 4096
+	switch2# spanning-tree vlan 20 priority 4096
 \end{minted}
 
-The following command was run from home directory. It said its size was 58 MB.
-
+\section{Changing the spanning tree mode to PVRST+}
 \begin{minted}{bash}
-	du anon
+	switch# spanning-tree mode rapid-pvst
 \end{minted}
 
-The following commands created a text file and then listed all files. And it listed the file just created.
-
+\section{Changing the spanning tree mode to MST}
 \begin{minted}{bash}
-	touch file.txt 
-	ls
+	switch# spanning-tree mode mst
 \end{minted}
 
-The following command lists file info. The size of file.txt was 0.
-The owner of it was "anon" and the group was the same. The were 9 directories listed.
-
-\begin{minted}{bash}
-	ls -l
-\end{minted}
-
-\subsection{Exercise 2.4}
-
-The following commands writes some text to a file and displays some info.
-The size of the file was 15 bytes.
-
-\begin{minted}{bash}
-	echo "This is a test" > file.txt 
-	cat file.txt
-	ls -l
-\end{minted}
-
-\subsection{Exercise 2.5}
-The following commands was run.
-\begin{minted}{bash}
-	file file.txt
-\end{minted}
-The output was 'file.txt: ASCII text'.
-When used on a directory is said 'Desktop: directory'.
-On a binary file, is said 'bin/ls: ELF 64 biy LSB pie executable...'.
-
-\subsection{Exercise 2.6}
-\begin{minted}{bash}
-	cat /dev/null > file.txt
-	ls -l file.txt
-\end{minted}
-The output now shows the size is 0.
-The /dev/null is a logical device that discards output directed to it.
-
-\subsection{Exercise 2.7}
-To sort files by modification time
-\begin{minted}{bash}
-	ls -t
-\end{minted}
-To list files with their permissions, including hidden files
-\begin{minted}{bash}
-	ls -a
-\end{minted}
-To list files in reverse order
-\begin{minted}{bash}
-	ls -r
-\end{minted}
-
-\subsection{Exercise 2.8}
-The following commands creates a file. Then a directory. Then it moves and renames the file. Then it copies it. Lastly we remove both the file and the directory.
-\begin{minted}{bash}
-	touch hej.txt
-	mkdir games
-	mv hej.txt games/hej2.txt
-	cp games/hej2.txt .
-	rm hej2.txt
-	rm -rf games
-\end{minted}
-
-\subsection{Exercise 2.9}
-To find all png files
-\begin{minted}{bash}
-	find /usr/share -name "*.png"
-\end{minted}
-To find all directories
-\begin{minted}{bash}
-	find /etc -type d
-\end{minted}
-To find all files containing 'txt'
-\begin{minted}{bash}
-	find /home -type f -name "*txt*"
-\end{minted}
-
-\subsection{Exercise 2.10}
-To create a compressed archive of the home folder, give the following commands.
-\begin{minted}{bash}
-	tar -czvf home.tgz /home
-\end{minted}
-To extract the archive, use the following command.
-\begin{minted}{bash}
-	tar -xvf home.tgz
-\end{minted}
-These commands are really simple to use.
-
-\section{Task 3}
-\subsection{Exercise 3.1}
-The outputs are different because when you use the io redirection,
-the 'wc' program doesn't take file name as input and hence cant write the name of the file.
-
-\subsection{Exercise 3.2}
-The following command writes text from a file to another file.
-\begin{minted}{bash}
-	cat /etc/passwd > ~/passwd
-\end{minted}
-It redirects the output from cat to the file passwd which is in home directory.
-You could do the following commands to achieve similar things.
-\begin{minted}{bash}
-	cp /etc/passwd ~/passwd
-\end{minted}
-To get all lines containing 'sshd' from /var/log/auth.log and 
-redirect the output to /tmp/sshdlog
-\begin{minted}{bash}
-	grep 'sshd' /var/log/auth.log > /tmp/sshdlog
-\end{minted}
-
-\subsection{Exercise 3.3}
-
-
-
-
-
-
-
-
-\section {Task 10}
-\begin{enumerate}
-	\item Motherboard connects every electronic component. It is like the human bones and tendons. It holds everything together so its kind of located in the middle and everywhere.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{motherboard}
-	\item Central processing unit (CPU) is like the human brain. It executes instructions.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{cpu}
-	\item CPU cooler cools the hardware temperature down to keep it functioning. Its like the sweat glands under the human skin.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{cooler}
-	\item Random-access memory (RAM) is like the humans short term memory in the brain. Its where the cpu reads its instructions for example. The RAM is emptied on shutdown.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{ram}
-	\item Video card (graphic card) is like the visual cortex in the human brain. It processes and often renders graphics.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{gpu}
-	\item Optical disk drive (ODD) is kinda old school. It reads data from a disk. You can compare the disc to a piece of text and the ODD as the human capable of reading from it and writing to it.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{odd}
-	\item Solid state drive (SDD) is faster than hard drive. It is flash memory based on transistors.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{sdd}
-	\item Power supply is like the human heart. It provides power for the whole system just as the heart pumps its blood.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{power}
-	\item Hard disk drive (HDD) is like the long term memory for the humans. It is where the PC stores data that exists in between shutdowns.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{hdd}
-	\item Computer case is like the human brain. It protects the hardware from the environment.
-	\includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{chassi}
-\end{enumerate}
-
-\section {Task 3}
-It was good to refresh my knowledge about computer hardware. 
-The ubuntu task was a bit challenging because I failed to do it on my mac with vm ware but it was very easy to setup with virtual box on a windows pc.
+\section{Inter VLAN routing HSRP}
 
 \end{document}
 
