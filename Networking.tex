@@ -90,7 +90,70 @@ The first commands is to clear and setup the switches in the topology.
 
 \subsection{Basic config}
 \begin{minted}{bash}
-	
+	no ip domain-lookup
+	enable secret hej
+	banner motd & AUTHORIZED ACCESS ONLY &
+	line console 0
+	logging synchronous
+	exec-timeout 0 0
+	password hej2
+	login
+	exit
+	line vty 0 4
+	logging synchronous
+	exec-timeout 0 0
+	password hej3
+	login
+	exit
+\end{minted}
+
+\subsection{Describe an interface}
+\begin{minted}{bash}
+	int fa0/1
+	description R1 LAN
+\end{minted}
+
+\subsection{Preparing a layer 3 switch for remote access}
+
+\begin{minted}{bash}
+	ip routing
+	int vlan 99
+	ip address 172.17.99.11 255.255.255.0
+	no shutdown
+	int fa0/1
+	switchport mode access
+	switchport access vlan 99
+\end{minted}
+
+\subsection{Setting up telnet}
+\begin{minted}{bash}
+	aaa new-model
+	username philip password 0 wenkel
+	line vty 0 4
+	transport input telnet
+\end{minted}
+
+\subsection{Setting up ssh}
+\begin{minted}{bash}
+	aaa new-model
+	username philip password 0 wenkel
+	ip domain-name philip.com
+	crypto key generate rsa
+	ip ssh version 2
+	line vty 0 4
+	transport input ssh
+\end{minted}
+
+In order to connect from my mac, I used the following command 
+
+\begin{minted}{bash}
+	ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-rsa -oCiphers=+aes256-cbc philip@172.17.99.99
+\end{minted}
+
+But before this was possible, I had to change the ip address on my network adapter with the following command
+
+\begin{mined}{bash}
+	sudo ifconfig en14 inet 172.17.99.101
 \end{minted}
 
 \subsection{Configure transparent VTP mode}
