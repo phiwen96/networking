@@ -153,7 +153,7 @@ In order to connect from my mac, I used the following command
 But before this was possible, I had to change the ip address on my network adapter with the following command
 
 \begin{mined}{bash}
-	sudo ifconfig en14 inet 172.17.99.101
+	sudo ifconfig en14 inet 172.17.99.101 netmask 255.255.255.0
 \end{minted}
 
 \subsection{Configure transparent VTP mode}
@@ -192,6 +192,29 @@ But before this was possible, I had to change the ip address on my network adapt
 	switch# int fa0/1
 	switch# spanning-tree cost 10
 \end{minted}
+
+\section{STP}
+To debug stp
+\begin{minted}{bash}
+	debug spanning-tree events
+\end{minted}
+
+Changing to primary root switch for a vlan
+\begin{minted}{bash}
+	spanning-tree vlan 1 root primary
+\end{minted}
+
+Changing to secondary root switch for a vlan
+\begin{minted}{bash}
+	spanning-tree vlan 1 root secondary
+\end{minted}
+
+Setting a specific stp priority number
+\begin{minted}{bash}
+	spanning-tree vlan 1 priority 2
+\end{minted}
+
+
 
 \section{Assign a root switch for each VLAN}
 \begin{minted}{bash}
