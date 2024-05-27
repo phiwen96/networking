@@ -13,15 +13,19 @@ secr = "hej"
 dls1 = telnetlib.Telnet(sys.argv [1])
 
 dls1.write (str (sys.argv [2]).encode ('ascii') + b"\n" + passw.encode ('ascii') + b"\nen\nhej\nconf t\n")
-commands = b"""spanning-tree mode rapid-pvst
-vtp mode transparent
+commands = b"""vtp mode transparent
 vtp domain CISCO
-vlan 10,20
-spanning-tree vlan 10 priority 4096
+vlan 10,20,30,40,50,60,70,80,90,100
 int range g0/7-12
 switchport trunk encapsulation dot1q
 switchport mode trunk
 no shut
+spanning-tree mode mst
+spanning-tree mst configuration
+name CISCO
+revision 1
+instance 1 vlan 20-50
+instance 2 vlan 80,100
 """
 
 dls1.write (commands)
