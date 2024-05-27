@@ -20,6 +20,7 @@ int range g0/7-12
 switchport trunk encapsulation dot1q
 switchport mode trunk
 no shut
+exit
 spanning-tree mode mst
 spanning-tree mst configuration
 name CISCO

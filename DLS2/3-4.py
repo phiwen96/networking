@@ -16,6 +16,7 @@ dls2_commands = [
 	"switchport trunk encapsulation dot1q",
 	"switchport mode trunk",
 	"no shut",
+	"exit",
 	"spanning-tree mode mst",
 	"spanning-tree mst configuration",
 	"name CISCO",
