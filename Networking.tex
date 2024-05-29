@@ -59,6 +59,7 @@
 \begin{minted}{bash}
 	flash_init
 	rename flash:config.text flash:config.old
+	boot
 	rename flash:config.old flash:config.text
 	copy flash:config.text system:running-config
 \end{minted}
