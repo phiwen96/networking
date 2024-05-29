@@ -54,6 +54,15 @@
 	reset
 \end{minted}
 
+\section{Password recovery on a switch}
+
+\begin{minted}{bash}
+	flash_init
+	rename flash:config.text flash:config.old
+	rename flash:config.old flash:config.text
+	copy flash:config.text system:running-config
+\end{minted}
+
 \section{Preparing a standalone switch}
 The first commands is to clear and setup the switches in the topology.
 
