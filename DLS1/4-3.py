@@ -72,45 +72,6 @@ dls1_commands = [
 	"network 172.16.1.1 0.0.0.255",
 	"network 172.16.11.1 0.0.0.255",
 	"exit"
-
-
-
-
-
-
-	"int vlan 1",
-	"ip addr 172.16.1.1 255.255.255.0",
-	"no shut",
-	"exit",
-	"ip default-gateway 172.16.1.1",
-	"int range fa0/7-8",
-	"switchport trunk encapsulation dot1q",
-	"switchport mode trunk",
-	"channel-group 1 mode desirable",
-	"spanning-tree portfast trunk",
-	"exit",
-	"int range fa0/9-10",
-	"switchport trunk encapsulation dot1q",
-	"switchport mode trunk",
-	"channel-group 2 mode desirable",
-	"spanning-tree portfast trunk",
-	"exit",
-	"vtp domain SWPOD",
-	"vtp version 2",
-	"vlan 100",
-	"name Finance",
-	"vlan 200",
-	"name Engineering",
-	"exit",
-	"int vlan 100",
-	"ip addr 172.16.100.1 255.255.255.0",
-	"no shut",
-	"exit",
-	"int vlan 200",
-	"ip addr 172.16.200.1 255.255.255.0",
-	"no shut",
-	"exit",
-	"ip routing"
 	]
 
 dls1.send_config_set (dls1_commands)

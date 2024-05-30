@@ -28,9 +28,7 @@ R1_commands = [
 	"router eigrp 1",
 	"no auto-summary"
 	"network 172.16.10.2 0.0.0.255",
-	"network 172.16.40.2 0.0.0.255",
-
-
+	"network 172.16.40.2 0.0.0.255"
 	]
 
 R1.send_config_set (R1_commands)

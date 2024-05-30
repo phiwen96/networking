@@ -36,24 +36,7 @@ dls2_commands = [
 	"int vlan 10",
 	"ip addr 172.16.10.1 255.255.255.0",
 	"no shut",
-	"exit",
-	
-
-
-	"vtp mode transparent",
-	"vtp domain CISCO",
-	"vlan 10,20,30,40,50,60,70,80,90,100",
-	"int range fa0/7-12",
-	"switchport trunk encapsulation dot1q",
-	"switchport mode trunk",
-	"no shut",
-	"exit",
-	"spanning-tree mode mst",
-	"spanning-tree mst configuration",
-	"name CISCO",
-	"revision 1",
-	"instance 1 vlan 20-50",
-	"instance 2 vlan 80,100"]
+	"exit"]
 
 dls2.send_config_set (dls2_commands)
 dls2.disconnect ()
