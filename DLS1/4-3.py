@@ -54,6 +54,25 @@ dls1_commands = [
 	"int range fa0/9-10",
 	"channel-group 2 mode desirable",
 	"exit",
+	"int vlan 20",
+	"ip addr 172.16.20.1 255.255.255.0",
+	"no shut",
+	"exit",
+	"int vlan 30",
+	"ip addr 172.16.30.1 255.255.255.0",
+	"no shut",
+	"exit",
+	"int vlan 40",
+	"ip addr 172.16.40.1 255.255.255.0",
+	"no shut",
+	"exit",
+	"ip routing",
+	"router eigrp 1",
+	"no auto-summary",
+	"network 172.16.1.1 0.0.0.255",
+	"network 172.16.11.1 0.0.0.255",
+	"exit"
+
 
 
 

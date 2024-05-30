@@ -33,6 +33,10 @@ dls2_commands = [
 	"spanning-tree portfast trunk",
 	"no shut",
 	"exit",
+	"int vlan 10",
+	"ip addr 172.16.10.1 255.255.255.0",
+	"no shut",
+	"exit",
 	
 
 
