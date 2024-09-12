@@ -170,8 +170,40 @@ In order to connect from my mac, I used the following command
 But before this was possible, I had to change the ip address on my network adapter with the following command
 
 \begin{mined}{bash}
-	sudo ifconfig en14 inet 172.17.99.101 netmask 255.255.255.0
+	sudo ifconfig en14 inet 172.168.8.1 netmask 255.255.255.0
 \end{minted}
+
+1  sudo apt update
+2  sudo apt full-upgrade -y
+3  sudo reboot
+4  sudo dpkg-reconfigure keyboard-configuration
+5  sudo service keyboard-setup restart
+6  sudo dpkg-reconfigure keyboard-configuration
+7  sudo reboot
+8  sudo nano /etc/lightdm/lightdm.conf
+9  sudo service lightdm restart
+10  sudo reboot
+11  sudo systemctl status ssh
+12  ip add
+13  sudo vi /etc/network/interfaces
+14  sudo ifdown eth0; sudo ifup eth0
+15  sudo reboot
+16  ls
+17  ls -a
+18  ls
+19  exit
+20  ip add
+21  ping 172.168.8.3
+22  ls
+23  sudo shutdown -h now
+24  exit
+25  ifconfig
+26  ls
+27  cd ..
+28  ls
+29  cat /etc/passwd
+30  sudo systemctl status ssh
+31  sudo shutdown -h now
 
 \subsection{Configure transparent VTP mode}
 \begin{minted}{bash}
@@ -437,3 +469,209 @@ Setting a specific stp priority number
 % \end{document}
 
 
+
+
+Current configuration : 4282 bytes
+!
+version 12.2
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname DLS2
+!
+boot-start-marker
+boot-end-marker
+!
+enable secret 5 $1$dRqd$do71MvUDLbLfI1UTg5qrb.
+!
+username philip password 0 wenkel
+aaa new-model
+!
+!
+!
+!
+!
+aaa session-id common
+system mtu routing 1500
+vtp domain CISCO
+vtp mode transparent
+ip subnet-zero
+ip domain-name philip.com
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-3648911744
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-3648911744
+ revocation-check none
+ rsakeypair TP-self-signed-3648911744
+!
+!
+crypto pki certificate chain TP-self-signed-3648911744
+ certificate self-signed 01
+  30820247 308201B0 A0030201 02020101 300D0609 2A864886 F70D0101 04050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 33363438 39313137 3434301E 170D3933 30333031 30303031 
+  31305A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D33 36343839 
+  31313734 3430819F 300D0609 2A864886 F70D0101 01050003 818D0030 81890281 
+  8100F2CD 8C932E58 9F1002F9 A83886B1 90177420 6AD096FB 8ABEE15E 2F04F675 
+  07B74A45 B2032111 0A0A63B6 89205D58 E3C3FAFB 0F8DA157 CF1EE696 5307B6AE 
+  58E7611F 8F759F8F 62E8EEB6 9128CCAC 7C627E96 563A7FE6 0FB869B0 2B78DFDC 
+  D944E6FC 5C479385 CBCE0B93 7DC09C45 573BEA02 4E28EFB0 F479B42D AB3F58D2 
+  FD490203 010001A3 6F306D30 0F060355 1D130101 FF040530 030101FF 301A0603 
+  551D1104 13301182 0F444C53 322E7068 696C6970 2E636F6D 301F0603 551D2304 
+  18301680 149F91B3 E628C885 DA7EBDC5 5DB129AE B2144098 87301D06 03551D0E 
+  04160414 9F91B3E6 28C885DA 7EBDC55D B129AEB2 14409887 300D0609 2A864886 
+  F70D0101 04050003 818100A5 63CC1F74 1BCD4293 6D03751F A315466E 0AEA1D3A 
+  E3DB5B20 B8CC8080 13CBBF0B 22DCC500 FCFE66A7 A00DED4B 34D0EE57 00DA85B0 
+  47AFE489 CD7B607A 3CBD29CA CB8831B5 7CBB3582 5AE634D5 A917D5F9 B66C13B6 
+  EBBAB783 FCA779D8 47D01185 DADD0BCF ECB0C294 3DFC3061 EBF77536 7D3F715E 
+  84517B91 3124065B 674B3C
+  quit
+!
+!
+!
+!
+!
+!
+spanning-tree mode mst
+spanning-tree extend system-id
+!
+spanning-tree mst configuration
+ name CISCO
+ revision 1
+ instance 1 vlan 20-50
+ instance 2 vlan 80, 100
+!
+spanning-tree vlan 10,20,30,40 priority 28672
+!
+vlan internal allocation policy ascending
+!
+vlan 10
+ name Red
+!
+vlan 20
+ name Blue
+!
+vlan 30
+ name Orange
+!
+vlan 40
+ name Green
+!         
+vlan 50,60,70,80,90,99-100 
+!
+ip ftp username philip
+ip ftp password hej
+ip ssh version 2
+!
+!
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ spanning-tree portfast trunk
+!
+interface FastEthernet0/8
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ spanning-tree portfast trunk
+!
+interface FastEthernet0/9
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ spanning-tree portfast trunk
+!
+interface FastEthernet0/10
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ spanning-tree portfast trunk
+!
+interface FastEthernet0/11
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ spanning-tree portfast trunk
+!
+interface FastEthernet0/12
+ no switchport
+ ip address 172.16.11.2 255.255.255.0
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!         
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+ switchport access vlan 99
+ switchport mode access
+ spanning-tree portfast
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 172.16.10.1 255.255.255.0
+!
+interface Vlan99
+ ip address 172.16.99.2 255.255.255.0
+!
+ip classless
+ip http server
+ip http secure-server
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ password hej
+ logging synchronous
+line vty 0 4
+ exec-timeout 0 0
+ password hej
+ logging synchronous
+ transport input telnet ssh
+line vty 5 15
+!
+end
