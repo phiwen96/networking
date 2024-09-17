@@ -58,23 +58,30 @@ done
 #echo "a=$start b=$slut"
 
 if [[ $start == "192.168.214."* ]]; then
-	echo "jaaaaa"
 	if [[ $slut == "192.168.215."* ]]; then
-                echo "yes"
+                # OK
+		a="OK"
         elif [[ $slut == "192.168.214."* ]]; then
 		#lastOctet = ${string: -3}
 		startLastOctet=${start:12}
 		slutLastOctet=${slut:12}
-		echo "start $startLastOctet slut $slutLastOctet"
+		#echo "start $startLastOctet slut $slutLastOctet"
 		if (( startLastOctet > slutLastOctet )); then
 			echo "wrong ip address range"
+			# Wrong
 		fi
         fi
 elif [[ $start == "192.168.215."* ]]; then
-	if [[ $slut == "192.168.215."* ]] then
-		echo "yes"
+	if [[ $slut == "192.168.215."* ]]; then
+		startLastOctet=${start:12}
+                slutLastOctet=${slut:12}
+                #echo "start $startLastOctet slut $slutLastOctet"
+                if (( startLastOctet > slutLastOctet )); then
+                        echo "wrong ip address range"
+                        # Wrong
+                fi
 	else
-		echo "no"
+		echo "Wrong"
 	fi
 else
 	echo "wrong input"
