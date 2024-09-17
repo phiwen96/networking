@@ -38,26 +38,30 @@
 
 \newpage
 
+#!/bin/bash
+
 while getopts ":h:a:b:" option; do
    case $option in
       h) # display Help
          echo "here is some help"
          exit;;
       a) # Start address
-         #ip=$OPTARG
-         #echo "a:$OPTARG";;
-         start=$OPTARG;;
+	 start=$OPTARG;;
       b) # Stop address
-         #ip = $OPTARG
-         #echo "b:$OPTARG";;
-         slut=$OPTARG;;
+	 slut=$OPTARG;;
      \?) # Invalid option
          echo "Error: Invalid option"
          exit;;
    esac
 done
 
-echo "a=$start b=$slut"
+#echo "a=$start b=$slut"
+
+if [[ $start == *".214."* ]] || [[ $start == *".215."* ]]; then
+echo "jaaaaa"
+else
+echo "neeeeeeej"
+fi
 
 R2#show ip route eigrp | include /24
 
