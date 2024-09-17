@@ -57,11 +57,29 @@ done
 
 #echo "a=$start b=$slut"
 
-if [[ $start == *".214."* ]] || [[ $start == *".215."* ]]; then
-echo "jaaaaa"
+if [[ $start == "192.168.214."* ]]; then
+	echo "jaaaaa"
+	if [[ $slut == "192.168.215."* ]]; then
+                echo "yes"
+        elif [[ $slut == "192.168.214."* ]]; then
+		#lastOctet = ${string: -3}
+		startLastOctet=${start:12}
+		slutLastOctet=${slut:12}
+		echo "start $startLastOctet slut $slutLastOctet"
+		if (( startLastOctet > slutLastOctet )); then
+			echo "wrong ip address range"
+		fi
+        fi
+elif [[ $start == "192.168.215."* ]]; then
+	if [[ $slut == "192.168.215."* ]] then
+		echo "yes"
+	else
+		echo "no"
+	fi
 else
-echo "neeeeeeej"
+	echo "wrong input"
 fi
+
 
 R2#show ip route eigrp | include /24
 
