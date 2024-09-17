@@ -38,6 +38,29 @@
 
 \newpage
 
+while getopts ":h:a:b:" option; do
+   case $option in
+      h) # display Help
+         echo "here is some help"
+         exit;;
+      a) # Start address
+         #ip=$OPTARG
+         #echo "a:$OPTARG";;
+         start=$OPTARG;;
+      b) # Stop address
+         #ip = $OPTARG
+         #echo "b:$OPTARG";;
+         slut=$OPTARG;;
+     \?) # Invalid option
+         echo "Error: Invalid option"
+         exit;;
+   esac
+done
+
+echo "a=$start b=$slut"
+
+R2#show ip route eigrp | include /24
+
 \section{Clearing a router}
 
 \begin{minted}{bash}
@@ -675,3 +698,6 @@ line vty 0 4
 line vty 5 15
 !
 end
+
+
+
