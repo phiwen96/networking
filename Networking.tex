@@ -55,14 +55,13 @@ while getopts ":h:a:b:" option; do
    esac
 done
 
-#echo "a=$start b=$slut"
-
 if [[ $start == "192.168.214."* ]]; then
+	a=214
 	if [[ $slut == "192.168.215."* ]]; then
                 # OK
-		a="OK"
+		b=215
         elif [[ $slut == "192.168.214."* ]]; then
-		#lastOctet = ${string: -3}
+		b=214
 		startLastOctet=${start:12}
 		slutLastOctet=${slut:12}
 		#echo "start $startLastOctet slut $slutLastOctet"
@@ -83,9 +82,23 @@ elif [[ $start == "192.168.215."* ]]; then
 	else
 		echo "Wrong"
 	fi
+	a=215
+	b=215
 else
 	echo "wrong input"
 fi
+
+
+
+#for i in { $(($startLastOctet))..$(($slutLastOctet)) }; do
+#	echo "${start:0:12} + $i"
+#done
+
+i=$(( startLastOctet ))
+while (( i <= $slutLastOctet )); do
+	echo "${start:0:12}$i"
+	i=$(( $i + 1 ))
+done
 
 
 R2#show ip route eigrp | include /24
