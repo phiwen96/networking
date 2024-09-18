@@ -43,7 +43,7 @@
 while getopts ":h:a:b:" option; do
    case $option in
       h) # display Help
-         echo "here is some help"
+         echo "-a [starting ip] -b [ending ip]"
          exit;;
       a) # Start address
 	 start=$OPTARG;;
@@ -76,16 +76,16 @@ elif [[ $start == "192.168.215."* ]]; then
                 slutLastOctet=${slut:12}
                 #echo "start $startLastOctet slut $slutLastOctet"
                 if (( startLastOctet > slutLastOctet )); then
-                        echo "wrong ip address range"
+                        echo "error >> first ip address is higher then the last"
                         # Wrong
                 fi
 	else
-		echo "Wrong"
+		echo "error >> first ip address is higher then the last"
 	fi
 	a=215
 	b=215
 else
-	echo "wrong input"
+	echo "wrong ip address as start. Should be something like 192.168.[214/215].7"
 fi
 
 
@@ -93,10 +93,39 @@ fi
 #for i in { $(($startLastOctet))..$(($slutLastOctet)) }; do
 #	echo "${start:0:12} + $i"
 #done
+currDay=$(date +%d)
+currMonth=$(date +%m)
+currYear=$(date +%y)
 
+fileName=".ping_log_$currDay$currMonth$currYear"
+
+#if [ -f $fileName ]; then
+#fi
+
+#modDay=$(date --utc --reference=.ping_log +%d)
+#modMonth=$(date --utc --reference=.ping_log +%m)
+#modYear=$(date --utc --reference=.ping_log +%y)
+
+#if (( modDay == currDay )) && (( modMonth == currMonth )) && (( modYear == currYear )); then
+#	echo "yaaaaa"
+#fi
+
+# Loop through all ip addresses
 i=$(( startLastOctet ))
 while (( i <= $slutLastOctet )); do
-	echo "${start:0:12}$i"
+
+	ip="${start:0:12}$i"
+	ping -c 2 $ip
+	ret=$?
+
+	# Check if successful ping
+	if (( $ret == 0 )); then
+		# Write ip address to file
+		$ip >> $fileName
+	else
+		echo "Unsuccessful ping for $ip"
+	fi
+
 	i=$(( $i + 1 ))
 done
 
